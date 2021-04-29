@@ -1,5 +1,5 @@
 import React from 'react';
-import { IUserData } from "../../../hooks/useUsersData";
+import { IUserData } from "../Autocomplete";
 
 interface IAutocompleteListProps {
   autocompleteHints: IUserData[];
