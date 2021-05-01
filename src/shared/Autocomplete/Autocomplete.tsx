@@ -1,5 +1,6 @@
 import React from 'react';
-import { AutocompleteList } from '../Autocomplete/AutocompleteList';
+import { AutocompleteList } from './AutocompleteList';
+import { useMountedState } from '../../hooks/useMountedState';
 
 export interface IUserData {
   id: number;
@@ -31,13 +32,13 @@ export const Autocomplete: React.FC = () => {
   const [autocompleteHints, setAutocompleteHints] = React.useState<IUserData[]>([]);
   const [showAutocomplete, setShowAutocomplete] = React.useState<Boolean>(false);
   const inputRef = React.useRef<HTMLInputElement>(null);
+  const isMounted = useMountedState()
 
   React.useEffect(() => {
-    let isMounted = true; 
     const fetchData = async () => {
       const response = await fetch('https://jsonplaceholder.typicode.com/users');
       const data = await response.json();
-      if (isMounted) { 
+      if (isMounted()) {
         setData(data);
       }
     }
@@ -47,11 +48,8 @@ export const Autocomplete: React.FC = () => {
     setAutocompleteHints(
       data.filter((user: IUserData) => user.name.toLowerCase().includes(inputValue.toLowerCase()))
     );
-      
-    return () => {
-      isMounted = false;
-    };
-  }, [inputValue, data]);
+
+  }, [inputValue, data, isMounted]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setInputValue(e.currentTarget.value);

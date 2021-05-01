@@ -1,4 +1,4 @@
-import { render, fireEvent, act, waitFor } from '@testing-library/react';
+import { render, fireEvent, waitFor } from '@testing-library/react';
 import path from 'path';
 import fs from 'fs/promises';
 import { rest } from 'msw';
